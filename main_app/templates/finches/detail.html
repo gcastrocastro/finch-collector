@@ -8,6 +8,9 @@
       <span class="card-title">{{ finch.name }} ({{ finch.scientific_name}} )</span>
       <p>Description: {{ finch.description }}</p>
     </div>
+    <div class="card-action">
+      <a href="{% url 'finches_update' finch.id %}">Edit</a>
+    </div>
   </div>
 
 {% endblock %}
