@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, DetailView
 
-from .models import Finch
+from .models import Finch, Sponsor
 from .forms import FeedingForm
 
 def home(request):
@@ -45,3 +46,21 @@ class FinchDelete(DeleteView):
    model = Finch
    fields = ['name', 'scientific_name', 'description']
    success_url = '/finches'
+
+class SponsorCreate(CreateView):
+    model = Sponsor
+    fields = ['name', 'donation']
+
+class SponsorList(ListView):
+    model = Sponsor
+
+class SponsorDetail(DetailView):
+    model = Sponsor
+
+class SponsorUpdate(UpdateView):
+    model = Sponsor
+    fields = ['name', 'donation']
+
+class SponsorDelete(DeleteView):
+    model = Sponsor
+    success_url = '/sponsors/'
