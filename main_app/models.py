@@ -1,10 +1,21 @@
 from django.db import models
 from django.urls import reverse
 
+class Sponsor(models.Model):
+    name = models.CharField(max_length=50)
+    donation = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f'{self.name} donated {self.donation}'
+    
+    def get_absolute_url(self):
+        return reverse('sponsors_detail', kwargs={'pk': self.id})
+
 class Finch(models.Model):
     name = models.CharField(max_length=100)
     scientific_name = models.CharField(max_length=100)
     description = models.TextField(max_length=250)
+    sponsors = models.ManyToManyField(Sponsor)
     
     def __str__(self):
         return self.name
