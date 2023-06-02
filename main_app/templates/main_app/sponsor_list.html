@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Sponsor Index</h1>
+
+{% for sponsor in object_list %}
+
+<a href="{% url 'sponsors_detail' sponsor.id %}">
+    <div class="card">
+        <div class="card-content">
+            <span class="card-title">{{sponsor.name}}</span>
+        </div>
+    </div>
+</a>
+
+{% endfor %}
+
+{% endblock %}
