@@ -36,6 +36,52 @@
     </table>
   </div>
 </div>
+
+<hr>
+
+<div class="row">
+  <div class="col s6">
+    <h3>{{ finch.name }}'s Sponsors</h3>
+    {% if finch.sponsors.count %}
+      {% for sponsor in finch.sponsors.all %}
+        <div class="card">
+          <div class="card-content">
+            <span class="card-title"> {{ sponsor.name }} </span>
+          </div>
+          <div class="card-action">
+            <form action="{% url 'unassoc_sponsor' finch.id sponsor.id %}" method="post">
+              {% csrf_token %}
+              <input type="submit" value="Remove" class="btn red">
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    {% else %}
+      <h5>{{finch.name}} doesn't have any sponsors, consider becoming its first or donating on behalf of another sponsor below!</h5>
+    {% endif %}
+  </div>
+  <div class="col s6">
+    <h3>Available Sponsors</h3>
+    {% if sponsors.count %}
+      {% for sponsor in sponsors %}
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title"> {{ sponsor.name }} </span>
+        </div>
+        <div class="card-action">
+          <form action="{% url 'assoc_sponsor' finch.id sponsor.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Add" class="btn blue">
+          </form>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+    <h5>{{ finch.name }} Already Has All Available Sponsors</h5>
+    {% endif %}
+  </div>
+</div>
+
 <script>
   const dateEl = document.getElementById('id_date');
   M.Datepicker.init(dateEl, {

@@ -15,4 +15,6 @@ urlpatterns = [
     path('sponsors/create/', views.SponsorCreate.as_view(), name='sponsors_create'),
     path('sponsors/<int:pk>/update/', views.SponsorUpdate.as_view(), name='sponsors_update'),
     path('sponsors/<int:pk>/delete/', views.SponsorDelete.as_view(), name='sponsors_delete'),
+    path('finches/<int:finch_id>/assoc_sponsor/<int:sponsor_id>/', views.assoc_sponsor, name='assoc_sponsor'),
+    path('finches/<int:finch_id>/unassoc_sponsor/<int:sponsor_id>/', views.unassoc_sponsor, name='unassoc_sponsor'),
 ]

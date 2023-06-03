@@ -19,10 +19,13 @@ def finches_index(request):
 
 def finches_detail(request, finch_id):
    finch = Finch.objects.get(id = finch_id)
+   id_list = finch.sponsors.all().values_list('id')
+   sponsors_finch_doesnt_have = Sponsor.objects.exclude(id__in = id_list)
    feeding_form = FeedingForm()
    return render(request, 'finches/detail.html', {
       'finch': finch,
-      'feeding_form': feeding_form
+      'feeding_form': feeding_form,
+      'sponsors': sponsors_finch_doesnt_have
    })
 
 def add_feeding(request, finch_id):
@@ -33,6 +36,13 @@ def add_feeding(request, finch_id):
       new_feeding.save()
    return redirect('detail', finch_id=finch_id)
 
+def assoc_sponsor(request, finch_id, sponsor_id):
+   Finch.objects.get(id=finch_id).sponsors.add(sponsor_id)
+   return redirect('detail', finch_id=finch_id)
+
+def unassoc_sponsor(request, finch_id, sponsor_id):
+   Finch.objects.get(id=finch_id).sponsors.remove(sponsor_id)
+   return redirect('detail', finch_id=finch_id)
 
 class FinchCreate(CreateView):
    model = Finch
